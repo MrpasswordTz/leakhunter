@@ -143,6 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
+            <div class="mb-4">
+                <a href="index.php" class="inline-flex items-center text-cyber-blue hover:text-cyber-green transition-colors mb-2">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Home
+                </a>
+            </div>
             <form method="POST" class="space-y-4">
                 <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
 

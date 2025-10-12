@@ -14,11 +14,13 @@
                         'cyber-dark': '#0a0a0a',
                         'cyber-gray': '#1a1a1a',
                         'cyber-green': '#00ff41',
-                        'cyber-red': '#ff0040',
                         'cyber-blue': '#0080ff',
                         'cyber-purple': '#8000ff',
                         'cyber-orange': '#ff8000',
-                        'cyber-yellow': '#ffff00'
+                        'cyber-yellow': '#ffff00',
+                        'cyber-pink': '#ff0080',
+                        'cyber-teal': '#00ffcc',
+                        'cyber-indigo': '#4b0082'
                     }
                 }
             }
@@ -114,11 +116,58 @@
         }
     </style>
 </head>
-<body class="bg-cyber-dark min-h-screen tech-font">
-    <!-- Animated Background Layers -->
-    <div class="absolute inset-0 matrix-bg -z-10"></div>
-    <div class="absolute inset-0 cyber-grid -z-10"></div>
-    <div class="absolute inset-0 data-stream -z-10"></div>
+<body class="min-h-screen tech-font">
+    <!-- Navigation -->
+    <nav class="cyber-nav py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex-shrink-0">
+                    <a href="home.php" class="flex items-center">
+                        <div class="logo-container">
+                            <div class="logo-inner">
+                                <i class="fas fa-shield-alt text-cyber-green text-xl"></i>
+                                <span class="cyber-font text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyber-green via-cyber-blue to-cyber-purple">LeakHunter</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="home.php" class="text-cyber-green hover:text-cyber-blue transition-colors">Home</a>
+                        <a href="services.php" class="text-gray-300 hover:text-cyber-green transition-colors">Services</a>
+                        <a href="about.php" class="text-gray-300 hover:text-cyber-green transition-colors">About</a>
+                        <a href="documentation.php" class="text-gray-300 hover:text-cyber-green transition-colors">Documentation</a>
+                        <a href="faq.php" class="text-gray-300 hover:text-cyber-green transition-colors">FAQ</a>
+                        <a href="contact.php" class="text-gray-300 hover:text-cyber-green transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-cyber-green hover:text-cyber-blue focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 bg-cyber-dark/95 z-50 flex items-center justify-center" style="display: none;">
+        <div class="text-center">
+            <div class="space-y-6">
+                <a href="home.php" class="block text-2xl text-cyber-green hover:text-cyber-blue transition-colors">Home</a>
+                <a href="services.php" class="block text-2xl text-gray-300 hover:text-cyber-green transition-colors">Services</a>
+                <a href="about.php" class="block text-2xl text-gray-300 hover:text-cyber-green transition-colors">About</a>
+                <a href="documentation.php" class="block text-2xl text-gray-300 hover:text-cyber-green transition-colors">Documentation</a>
+                <a href="faq.php" class="block text-2xl text-gray-300 hover:text-cyber-green transition-colors">FAQ</a>
+                <a href="contact.php" class="block text-2xl text-gray-300 hover:text-cyber-green transition-colors">Contact</a>
+            </div>
+            <button id="close-mobile-menu" class="mt-12 text-cyber-green hover:text-cyber-blue transition-colors">
+                <i class="fas fa-times text-3xl"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav class="cyber-nav fixed top-0 left-0 right-0 z-50">
@@ -186,11 +235,12 @@
     <div id="mobile-overlay-header" class="fixed inset-0 bg-black/50 z-40 md:hidden" style="display: none;"></div>
 
     <!-- Main Content Container -->
-    <div class="pt-16">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="bg-cyber-gray/50 border border-cyber-green/30 rounded-xl p-8">
-                <div class="mb-6">
-                    <a href="home.php" class="inline-flex items-center text-cyber-green hover:text-cyber-blue transition-colors tech-font">
+    <!-- Main Content -->
+    <main class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="content-container p-8 mb-12">
+                <div class="mb-8">
+                    <a href="home.php" class="back-button">
                         <i class="fas fa-arrow-left mr-2"></i> Back to Home
                     </a>
                 </div>
@@ -222,9 +272,10 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-cyber-gray border-t border-cyber-green/30 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Footer -->
+    <footer class="mt-24 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                 <!-- Company Info -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center space-x-2 mb-4">
@@ -293,33 +344,54 @@
     <!-- Mobile Menu Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const mobileOverlay = document.getElementById('mobile-overlay-header');
+            const closeMobileMenu = document.getElementById('close-mobile-menu');
 
-            if (mobileMenuButton && mobileMenu && mobileOverlay) {
-                function toggleMobileMenu() {
-                    if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
-                        mobileMenu.style.display = 'block';
-                        mobileOverlay.style.display = 'block';
-                    } else {
-                        mobileMenu.style.display = 'none';
-                        mobileOverlay.style.display = 'none';
-                    }
+            function toggleMobileMenu() {
+                if (mobileMenu.style.display === 'flex') {
+                    mobileMenu.style.display = 'none';
+                    document.body.style.overflow = '';
+                } else {
+                    mobileMenu.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
                 }
+            }
 
+            if (mobileMenuButton) {
                 mobileMenuButton.addEventListener('click', toggleMobileMenu);
-                mobileOverlay.addEventListener('click', toggleMobileMenu);
+            }
 
-                // Close on resize
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth >= 768) {
-                        mobileMenu.style.display = 'none';
-                        mobileOverlay.style.display = 'none';
+            if (closeMobileMenu) {
+                closeMobileMenu.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+
+            // Navbar scroll effect
+            const navbar = document.querySelector('.cyber-nav');
+            if (navbar) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
                     }
                 });
             }
         });
     </script>
-</body>
+
+    <style>
+        .cyber-nav.scrolled {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+    </style>
 </html>
