@@ -1,0 +1,2 @@
+[09-Oct-2025 18:05:52 UTC] Failed to log activity: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+[09-Oct-2025 22:16:53 UTC] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user 'elliot'@'localhost' (using password: YES)

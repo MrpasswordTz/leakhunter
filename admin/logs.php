@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../includes/config.php';
 requireLogin();
 
 $user = getUserInfo();
@@ -79,30 +79,14 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
     <title>Activity Logs - LeakHunter</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cyber-dark': '#0a0a0a',
-                        'cyber-gray': '#1a1a1a',
-                        'cyber-green': '#00ff41',
-                        'cyber-red': '#ff0040',
-                        'cyber-blue': '#0080ff',
-                        'cyber-purple': '#8000ff'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-cyber-dark min-h-screen">
+<body class="bg-gray-900 min-h-screen text-white">
     <?php include 'sidebar.php'; ?>
     
     <!-- Main Content -->
     <div class="lg:ml-64 min-h-screen">
         <!-- Header -->
-        <header class="bg-cyber-gray/80 backdrop-blur-sm border-b border-gray-800 px-6 py-4">
+        <header class="bg-gray-800 border-b border-gray-700 px-6 py-4">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-white">Activity Logs</h1>
@@ -111,7 +95,7 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
                         <p class="text-sm text-gray-400">Total Logs</p>
-                        <p class="text-lg font-bold text-cyber-blue"><?php echo number_format($total_logs); ?></p>
+                        <p class="text-lg font-bold text-blue-400"><?php echo number_format($total_logs); ?></p>
                     </div>
                 </div>
             </div>
@@ -120,9 +104,9 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
         <!-- Logs Content -->
         <main class="p-6">
             <!-- Filters -->
-            <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800 mb-6">
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
                 <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                    <i class="fas fa-filter text-cyber-purple mr-2"></i>
+                    <i class="fas fa-filter text-purple-400 mr-2"></i>
                     Filter Logs
                 </h3>
                 
@@ -132,7 +116,7 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                             <i class="fas fa-tag mr-2"></i>Action
                         </label>
                         <select id="action" name="action" 
-                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent">
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">All Actions</option>
                             <?php foreach ($actions as $action): ?>
                                 <option value="<?php echo htmlspecialchars($action); ?>" 
@@ -148,7 +132,7 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                             <i class="fas fa-calendar mr-2"></i>From Date
                         </label>
                         <input type="date" id="date_from" name="date_from" 
-                               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                value="<?php echo htmlspecialchars($date_from); ?>">
                     </div>
 
@@ -157,13 +141,13 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                             <i class="fas fa-calendar mr-2"></i>To Date
                         </label>
                         <input type="date" id="date_to" name="date_to" 
-                               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                value="<?php echo htmlspecialchars($date_to); ?>">
                     </div>
 
                     <div class="flex items-end">
                         <button type="submit" 
-                                class="w-full bg-gradient-to-r from-cyber-green to-cyber-blue text-white font-semibold py-3 px-6 rounded-lg hover:from-cyber-green/80 hover:to-cyber-blue/80 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:ring-offset-2 focus:ring-offset-cyber-dark transition-all">
+                                class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all">
                             <i class="fas fa-search mr-2"></i>Filter
                         </button>
                     </div>
@@ -171,13 +155,13 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
             </div>
 
             <!-- Logs Table -->
-            <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl border border-gray-800 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-800">
+            <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-700">
                     <h3 class="text-lg font-semibold text-white flex items-center">
-                        <i class="fas fa-list text-cyber-blue mr-2"></i>
+                        <i class="fas fa-list text-blue-400 mr-2"></i>
                         Activity Logs
                         <?php if ($total_logs > 0): ?>
-                            <span class="ml-2 bg-cyber-blue/20 text-cyber-blue px-2 py-1 rounded-full text-sm">
+                            <span class="ml-2 bg-blue-900 text-blue-400 px-2 py-1 rounded-full text-sm">
                                 <?php echo number_format($total_logs); ?> entries
                             </span>
                         <?php endif; ?>
@@ -193,7 +177,7 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                 <?php else: ?>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-800/50">
+                            <thead class="bg-gray-700">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                         <i class="fas fa-clock mr-2"></i>Timestamp
@@ -209,9 +193,9 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-800">
+                            <tbody class="divide-y divide-gray-700">
                                 <?php foreach ($logs as $log): ?>
-                                    <tr class="hover:bg-gray-800/30 transition-all">
+                                    <tr class="hover:bg-gray-700 transition-all">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-white">
                                                 <?php echo date('M j, Y', strtotime($log['created_at'])); ?>
@@ -224,11 +208,11 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                                 <?php 
                                                 $action = $log['action'];
-                                                if (strpos($action, 'login') !== false) echo 'bg-cyber-green/20 text-cyber-green';
-                                                elseif (strpos($action, 'logout') !== false) echo 'bg-cyber-red/20 text-cyber-red';
-                                                elseif (strpos($action, 'search') !== false) echo 'bg-cyber-blue/20 text-cyber-blue';
-                                                elseif (strpos($action, 'profile') !== false) echo 'bg-cyber-purple/20 text-cyber-purple';
-                                                else echo 'bg-gray-600/20 text-gray-400';
+                                                if (strpos($action, 'login') !== false) echo 'bg-green-900 text-green-400';
+                                                elseif (strpos($action, 'logout') !== false) echo 'bg-red-900 text-red-400';
+                                                elseif (strpos($action, 'search') !== false) echo 'bg-blue-900 text-blue-400';
+                                                elseif (strpos($action, 'profile') !== false) echo 'bg-purple-900 text-purple-400';
+                                                else echo 'bg-gray-700 text-gray-400';
                                                 ?>">
                                                 <i class="fas fa-<?php 
                                                     if (strpos($action, 'login') !== false) echo 'sign-in-alt';
@@ -259,7 +243,7 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
 
                     <!-- Pagination -->
                     <?php if ($total_pages > 1): ?>
-                        <div class="px-6 py-4 border-t border-gray-800">
+                        <div class="px-6 py-4 border-t border-gray-700">
                             <div class="flex items-center justify-between">
                                 <div class="text-sm text-gray-400">
                                     Showing <?php echo $offset + 1; ?> to <?php echo min($offset + $limit, $total_logs); ?> of <?php echo number_format($total_logs); ?> entries
@@ -268,21 +252,21 @@ logActivity($user['id'], 'logs_view', 'Viewed activity logs');
                                 <div class="flex items-center space-x-2">
                                     <?php if ($page > 1): ?>
                                         <a href="?page=<?php echo $page - 1; ?>&action=<?php echo urlencode($action_filter); ?>&date_from=<?php echo urlencode($date_from); ?>&date_to=<?php echo urlencode($date_to); ?>" 
-                                           class="px-3 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all">
+                                           class="px-3 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     <?php endif; ?>
                                     
                                     <?php for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++): ?>
                                         <a href="?page=<?php echo $i; ?>&action=<?php echo urlencode($action_filter); ?>&date_from=<?php echo urlencode($date_from); ?>&date_to=<?php echo urlencode($date_to); ?>" 
-                                           class="px-3 py-2 rounded-lg transition-all <?php echo $i === $page ? 'bg-cyber-blue text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'; ?>">
+                                           class="px-3 py-2 rounded-lg transition-all <?php echo $i === $page ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'; ?>">
                                             <?php echo $i; ?>
                                         </a>
                                     <?php endfor; ?>
                                     
                                     <?php if ($page < $total_pages): ?>
                                         <a href="?page=<?php echo $page + 1; ?>&action=<?php echo urlencode($action_filter); ?>&date_from=<?php echo urlencode($date_from); ?>&date_to=<?php echo urlencode($date_to); ?>" 
-                                           class="px-3 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all">
+                                           class="px-3 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     <?php endif; ?>

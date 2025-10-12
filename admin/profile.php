@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../includes/config.php';
 requireLogin();
 
 $user = getUserInfo();
@@ -129,30 +129,14 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
     <title>Profile - LeakHunter</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cyber-dark': '#0a0a0a',
-                        'cyber-gray': '#1a1a1a',
-                        'cyber-green': '#00ff41',
-                        'cyber-red': '#ff0040',
-                        'cyber-blue': '#0080ff',
-                        'cyber-purple': '#8000ff'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-cyber-dark min-h-screen">
+<body class="bg-gray-900 min-h-screen text-white">
     <?php include 'sidebar.php'; ?>
     
     <!-- Main Content -->
     <div class="lg:ml-64 min-h-screen">
         <!-- Header -->
-        <header class="bg-cyber-gray/80 backdrop-blur-sm border-b border-gray-800 px-6 py-4">
+        <header class="bg-gray-800 border-b border-gray-700 px-6 py-4">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-white">Profile Settings</h1>
@@ -161,7 +145,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
                         <p class="text-sm text-gray-400">Account Status</p>
-                        <p class="text-sm font-bold text-cyber-green">Active</p>
+                        <p class="text-sm font-bold text-green-400">Active</p>
                     </div>
                 </div>
             </div>
@@ -173,9 +157,9 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                 <!-- Profile Information -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Basic Information -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-user text-cyber-blue mr-2"></i>
+                            <i class="fas fa-user text-blue-400 mr-2"></i>
                             Basic Information
                         </h3>
                         
@@ -184,14 +168,14 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                             
                             <?php if ($error && ($_POST['action'] ?? '') === 'update_profile'): ?>
-                                <div class="bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-4 py-3 rounded-lg flex items-center">
+                                <div class="bg-red-900 border border-red-700 text-red-400 px-4 py-3 rounded-lg flex items-center">
                                     <i class="fas fa-exclamation-triangle mr-2"></i>
                                     <?php echo $error; ?>
                                 </div>
                             <?php endif; ?>
 
                             <?php if ($success && ($_POST['action'] ?? '') === 'update_profile'): ?>
-                                <div class="bg-cyber-green/20 border border-cyber-green/50 text-cyber-green px-4 py-3 rounded-lg flex items-center">
+                                <div class="bg-green-900 border border-green-700 text-green-400 px-4 py-3 rounded-lg flex items-center">
                                     <i class="fas fa-check-circle mr-2"></i>
                                     <?php echo $success; ?>
                                 </div>
@@ -203,7 +187,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                         <i class="fas fa-user mr-2"></i>Full Name
                                     </label>
                                     <input type="text" id="full_name" name="full_name" required
-                                           class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all"
+                                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                            value="<?php echo htmlspecialchars($user['full_name']); ?>">
                                 </div>
 
@@ -212,22 +196,22 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                         <i class="fas fa-envelope mr-2"></i>Email Address
                                     </label>
                                     <input type="email" id="email" name="email" required
-                                           class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all"
+                                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                            value="<?php echo htmlspecialchars($user['email']); ?>">
                                 </div>
                             </div>
 
                             <button type="submit" 
-                                    class="bg-gradient-to-r from-cyber-green to-cyber-blue text-white font-semibold py-3 px-6 rounded-lg hover:from-cyber-green/80 hover:to-cyber-blue/80 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:ring-offset-2 focus:ring-offset-cyber-dark transition-all">
+                                    class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all">
                                 <i class="fas fa-save mr-2"></i>Update Profile
                             </button>
                         </form>
                     </div>
 
                     <!-- Password Change -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-lock text-cyber-red mr-2"></i>
+                            <i class="fas fa-lock text-red-400 mr-2"></i>
                             Change Password
                         </h3>
                         
@@ -235,18 +219,18 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                             <input type="hidden" name="action" value="update_password">
                             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                             
-                            <?php if ($error && ($_POST['action'] ?? '') === 'update_password'): ?>
-                                <div class="bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-4 py-3 rounded-lg flex items-center">
-                                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                                    <?php echo $error; ?>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if ($success && ($_POST['action'] ?? '') === 'update_password'): ?>
-                                <div class="bg-cyber-green/20 border border-cyber-green/50 text-cyber-green px-4 py-3 rounded-lg flex items-center">
-                                    <i class="fas fa-check-circle mr-2"></i>
-                                    <?php echo $success; ?>
-                                </div>
+                            <?php if (isset($_POST['action']) && $_POST['action'] === 'update_password'): ?>
+                                <?php if ($error): ?>
+                                    <div class="bg-red-900 border border-red-700 text-red-400 px-4 py-3 rounded-lg flex items-center">
+                                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                                        <?php echo htmlspecialchars($error); ?>
+                                    </div>
+                                <?php elseif ($success): ?>
+                                    <div class="bg-green-900 border border-green-700 text-green-400 px-4 py-3 rounded-lg flex items-center">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <?php echo htmlspecialchars($success); ?>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
 
                             <div>
@@ -254,7 +238,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                     <i class="fas fa-key mr-2"></i>Current Password
                                 </label>
                                 <input type="password" id="current_password" name="current_password" required
-                                       class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all">
+                                       class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -263,7 +247,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                         <i class="fas fa-lock mr-2"></i>New Password
                                     </label>
                                     <input type="password" id="new_password" name="new_password" required
-                                           class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all">
+                                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                                 </div>
 
                                 <div>
@@ -271,21 +255,21 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                         <i class="fas fa-lock mr-2"></i>Confirm Password
                                     </label>
                                     <input type="password" id="confirm_password" name="confirm_password" required
-                                           class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all">
+                                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                                 </div>
                             </div>
 
                             <button type="submit" 
-                                    class="bg-gradient-to-r from-cyber-red to-cyber-purple text-white font-semibold py-3 px-6 rounded-lg hover:from-cyber-red/80 hover:to-cyber-purple/80 focus:outline-none focus:ring-2 focus:ring-cyber-red focus:ring-offset-2 focus:ring-offset-cyber-dark transition-all">
+                                    class="bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all">
                                 <i class="fas fa-key mr-2"></i>Change Password
                             </button>
                         </form>
                     </div>
 
                     <!-- API Token -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-code text-cyber-purple mr-2"></i>
+                            <i class="fas fa-code text-purple-400 mr-2"></i>
                             API Token Configuration
                         </h3>
                         
@@ -294,14 +278,14 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                             
                             <?php if ($error && ($_POST['action'] ?? '') === 'update_api_token'): ?>
-                                <div class="bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-4 py-3 rounded-lg flex items-center">
+                                <div class="bg-red-900 border border-red-700 text-red-400 px-4 py-3 rounded-lg flex items-center">
                                     <i class="fas fa-exclamation-triangle mr-2"></i>
                                     <?php echo $error; ?>
                                 </div>
                             <?php endif; ?>
 
                             <?php if ($success && ($_POST['action'] ?? '') === 'update_api_token'): ?>
-                                <div class="bg-cyber-green/20 border border-cyber-green/50 text-cyber-green px-4 py-3 rounded-lg flex items-center">
+                                <div class="bg-green-900 border border-green-700 text-green-400 px-4 py-3 rounded-lg flex items-center">
                                     <i class="fas fa-check-circle mr-2"></i>
                                     <?php echo $success; ?>
                                 </div>
@@ -313,7 +297,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                                 </label>
                                 <div class="relative">
                                     <input type="password" id="api_token" name="api_token" 
-                                           class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyber-blue focus:border-transparent transition-all pr-12"
+                                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all pr-12"
                                            value="<?php echo htmlspecialchars($user['api_token'] ?? ''); ?>"
                                            placeholder="Enter your LeakOSINT API token">
                                     <button type="button" onclick="toggleApiToken()" 
@@ -328,7 +312,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                             </div>
 
                             <button type="submit" 
-                                    class="bg-gradient-to-r from-cyber-purple to-cyber-blue text-white font-semibold py-3 px-6 rounded-lg hover:from-cyber-purple/80 hover:to-cyber-blue/80 focus:outline-none focus:ring-2 focus:ring-cyber-purple focus:ring-offset-2 focus:ring-offset-cyber-dark transition-all">
+                                    class="bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all">
                                 <i class="fas fa-save mr-2"></i>Update API Token
                             </button>
                         </form>
@@ -338,9 +322,9 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                 <!-- Account Statistics -->
                 <div class="space-y-6">
                     <!-- Account Info -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-chart-bar text-cyber-green mr-2"></i>
+                            <i class="fas fa-chart-bar text-green-400 mr-2"></i>
                             Account Statistics
                         </h3>
                         
@@ -357,7 +341,7 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                             
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-400">Tokens Remaining</span>
-                                <span class="text-cyber-green font-semibold"><?php echo number_format($user['tokens_remaining']); ?></span>
+                                <span class="text-green-400 font-semibold"><?php echo number_format($user['tokens_remaining']); ?></span>
                             </div>
                             
                             <div class="flex items-center justify-between">
@@ -375,30 +359,30 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                     </div>
 
                     <!-- Security Info -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-shield-alt text-cyber-red mr-2"></i>
+                            <i class="fas fa-shield-alt text-red-400 mr-2"></i>
                             Security Information
                         </h3>
                         
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-400">Account Status</span>
-                                <span class="bg-cyber-green/20 text-cyber-green px-2 py-1 rounded-full text-xs font-medium">
+                                <span class="bg-green-900 text-green-400 px-2 py-1 rounded-full text-xs font-medium">
                                     <i class="fas fa-check-circle mr-1"></i>Active
                                 </span>
                             </div>
                             
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-400">Password Strength</span>
-                                <span class="bg-cyber-green/20 text-cyber-green px-2 py-1 rounded-full text-xs font-medium">
+                                <span class="bg-green-900 text-green-400 px-2 py-1 rounded-full text-xs font-medium">
                                     <i class="fas fa-shield-alt mr-1"></i>Strong
                                 </span>
                             </div>
                             
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-400">2FA Status</span>
-                                <span class="bg-gray-600/20 text-gray-400 px-2 py-1 rounded-full text-xs font-medium">
+                                <span class="bg-gray-700 text-gray-400 px-2 py-1 rounded-full text-xs font-medium">
                                     <i class="fas fa-times-circle mr-1"></i>Disabled
                                 </span>
                             </div>
@@ -406,33 +390,33 @@ logActivity($user['id'], 'profile_view', 'Viewed profile page');
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                         <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                            <i class="fas fa-bolt text-cyber-blue mr-2"></i>
+                            <i class="fas fa-bolt text-blue-400 mr-2"></i>
                             Quick Actions
                         </h3>
                         
                         <div class="space-y-3">
                             <a href="dashboard.php" 
-                               class="flex items-center w-full px-4 py-3 bg-gray-800/50 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                               class="flex items-center w-full px-4 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
                                 <i class="fas fa-tachometer-alt mr-3"></i>
                                 <span>Go to Dashboard</span>
                             </a>
                             
                             <a href="search.php" 
-                               class="flex items-center w-full px-4 py-3 bg-gray-800/50 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                               class="flex items-center w-full px-4 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
                                 <i class="fas fa-search mr-3"></i>
                                 <span>Start New Search</span>
                             </a>
                             
                             <a href="history.php" 
-                               class="flex items-center w-full px-4 py-3 bg-gray-800/50 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all">
+                               class="flex items-center w-full px-4 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 hover:text-white transition-all">
                                 <i class="fas fa-history mr-3"></i>
                                 <span>View Search History</span>
                             </a>
                             
                             <a href="logout.php" 
-                               class="flex items-center w-full px-4 py-3 bg-cyber-red/20 text-cyber-red rounded-lg hover:bg-cyber-red/30 transition-all">
+                               class="flex items-center w-full px-4 py-3 bg-red-900 text-red-400 rounded-lg hover:bg-red-800 transition-all">
                                 <i class="fas fa-sign-out-alt mr-3"></i>
                                 <span>Logout</span>
                             </a>

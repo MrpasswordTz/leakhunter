@@ -16,14 +16,14 @@ define('DEFAULT_SEARCH_LIMIT', 100);
 define('DEFAULT_LANGUAGE', 'en');
 
 // Security Configuration
-define('SESSION_TIMEOUT', 3600); // 1 hour
+define('SESSION_TIMEOUT', 300); // 1 hour
 define('MAX_LOGIN_ATTEMPTS', 5);
-define('LOGIN_LOCKOUT_TIME', 900); // 15 minutes
+define('LOGIN_LOCKOUT_TIME', 300); // 15 minutes
 
 // Application Configuration
 define('APP_NAME', 'LeakHunter');
 define('APP_VERSION', '1.0.0');
-define('APP_URL', 'http://localhost/pawned/');
+define('APP_URL', 'http://104.168.4.143:8080/leakhunter');
 
 // File Upload Configuration
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
@@ -39,11 +39,24 @@ if (!file_exists(__DIR__ . '/logs')) {
 }
 
 // Error Reporting (disable in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/logs/error.log');
 
 // Timezone
 date_default_timezone_set('UTC');
+
+// Configure session parameters
+$sessionParams = session_get_cookie_params();
+session_set_cookie_params([
+    'lifetime' => $sessionParams['lifetime'],
+    'path' => '/',
+    'domain' => '',
+    'secure' => false,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 
 // Start session
 if (session_status() === PHP_SESSION_NONE) {
@@ -94,7 +107,16 @@ function generateCSRFToken() {
 }
 
 function verifyCSRFToken($token) {
-    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+    if (!is_string($token) || !isset($_SESSION['csrf_token'])) {
+        return false;
+    }
+    
+    try {
+        return hash_equals($_SESSION['csrf_token'], $token);
+    } catch (Exception $e) {
+        error_log('CSRF token verification failed: ' . $e->getMessage());
+        return false;
+    }
 }
 
 function logActivity($userId, $action, $details = '', $ipAddress = null, $userAgent = null) {
@@ -131,12 +153,29 @@ function getUserInfo() {
     
     try {
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM users WHERE id = ? AND is_active = 1");
+        $stmt = $db->prepare("SELECT * FROM users WHERE id = ? AND is_active = 1 AND is_banned = 0");
         $stmt->execute([$_SESSION['user_id']]);
         return $stmt->fetch();
     } catch (Exception $e) {
         error_log("Failed to get user info: " . $e->getMessage());
         return null;
+    }
+}
+
+function isAdmin() {
+    if (!isLoggedIn()) {
+        return false;
+    }
+    
+    $user = getUserInfo();
+    return $user && $user['role'] === 'admin';
+}
+
+function requireAdmin() {
+    if (!isAdmin()) {
+        logActivity($_SESSION['user_id'] ?? null, 'unauthorized_access', 'Attempted access to admin area');
+        header('Location: user/dashboard.php?error=unauthorized');
+        exit();
     }
 }
 

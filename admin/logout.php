@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../includes/config.php';
 
 // Log the logout activity before destroying session
 if (isLoggedIn()) {
@@ -19,6 +19,6 @@ if (ini_get("session.use_cookies")) {
 }
 
 // Redirect to login page
-header('Location: login.php?logged_out=1');
+header('Location: ../login.php?logged_out=1');
 exit();
 ?>

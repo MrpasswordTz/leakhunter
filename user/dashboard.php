@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../includes/config.php';
 requireLogin();
 
 $user = getUserInfo();
@@ -11,43 +11,43 @@ if (!$user) {
 // Get dashboard statistics
 try {
     $db = Database::getInstance()->getConnection();
-    
+
     // Total searches
     $stmt = $db->prepare("SELECT COUNT(*) as total FROM search_history WHERE user_id = ?");
     $stmt->execute([$user['id']]);
     $totalSearches = $stmt->fetch()['total'];
-    
+
     // Searches this month
     $stmt = $db->prepare("SELECT COUNT(*) as total FROM search_history WHERE user_id = ? AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())");
     $stmt->execute([$user['id']]);
     $monthlySearches = $stmt->fetch()['total'];
-    
+
     // Total tokens used
     $stmt = $db->prepare("SELECT SUM(tokens_used) as total FROM search_history WHERE user_id = ?");
     $stmt->execute([$user['id']]);
     $totalTokensUsed = $stmt->fetch()['total'] ?? 0;
-    
+
     // Recent searches
     $stmt = $db->prepare("SELECT query, results_count, created_at FROM search_history WHERE user_id = ? ORDER BY created_at DESC LIMIT 5");
     $stmt->execute([$user['id']]);
     $recentSearches = $stmt->fetchAll();
-    
+
     // Search types distribution
     $stmt = $db->prepare("SELECT search_type, COUNT(*) as count FROM search_history WHERE user_id = ? GROUP BY search_type");
     $stmt->execute([$user['id']]);
     $searchTypes = $stmt->fetchAll();
-    
+
     // Daily usage for last 7 days
     $stmt = $db->prepare("
-        SELECT DATE(created_at) as date, COUNT(*) as searches, SUM(tokens_used) as tokens 
-        FROM search_history 
+        SELECT DATE(created_at) as date, COUNT(*) as searches, SUM(tokens_used) as tokens
+        FROM search_history
         WHERE user_id = ? AND created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
         GROUP BY DATE(created_at)
         ORDER BY date DESC
     ");
     $stmt->execute([$user['id']]);
     $dailyUsage = $stmt->fetchAll();
-    
+
 } catch (Exception $e) {
     error_log("Dashboard error: " . $e->getMessage());
     $totalSearches = $monthlySearches = $totalTokensUsed = 0;
@@ -66,33 +66,17 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cyber-dark': '#0a0a0a',
-                        'cyber-gray': '#1a1a1a',
-                        'cyber-green': '#00ff41',
-                        'cyber-red': '#ff0040',
-                        'cyber-blue': '#0080ff',
-                        'cyber-purple': '#8000ff'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-cyber-dark min-h-screen">
+<body class="bg-gray-900 min-h-screen text-white">
     <?php include 'sidebar.php'; ?>
-    
+
     <!-- Main Content -->
     <div class="lg:ml-64 min-h-screen">
         <!-- Header -->
-        <header class="bg-cyber-gray/80 backdrop-blur-sm border-b border-gray-800 px-6 py-4">
+        <header class="bg-gray-800 border-b border-gray-700 px-6 py-4">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+                    <h1 class="text-2xl font-bold text-white">User Dashboard</h1>
                     <p class="text-gray-400">Welcome back, <?php echo htmlspecialchars($user['full_name']); ?></p>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -100,7 +84,7 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
                         <p class="text-sm text-gray-400">Last Login</p>
                         <p class="text-sm text-white"><?php echo $user['last_login'] ? date('M j, Y g:i A', strtotime($user['last_login'])) : 'Never'; ?></p>
                     </div>
-                    <div class="w-10 h-10 bg-gradient-to-r from-cyber-purple to-cyber-blue rounded-full flex items-center justify-center">
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                         <i class="fas fa-user text-white"></i>
                     </div>
                 </div>
@@ -112,52 +96,52 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Tokens Remaining -->
-                <div class="bg-gradient-to-br from-cyber-green/20 to-cyber-blue/20 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-cyber-green/50 transition-all group">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-400 text-sm font-medium">Tokens Remaining</p>
-                            <p class="text-3xl font-bold text-cyber-green mt-2"><?php echo number_format($user['tokens_remaining']); ?></p>
+                            <p class="text-3xl font-bold text-green-400 mt-2"><?php echo number_format($user['tokens_remaining']); ?></p>
                         </div>
-                        <div class="w-12 h-12 bg-cyber-green/20 rounded-lg flex items-center justify-center group-hover:bg-cyber-green/30 transition-all">
-                            <i class="fas fa-coins text-cyber-green text-xl"></i>
+                        <div class="w-12 h-12 bg-green-900 rounded-lg flex items-center justify-center group-hover:bg-green-800 transition-all">
+                            <i class="fas fa-coins text-green-400 text-xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="bg-gradient-to-r from-cyber-green to-cyber-blue h-2 rounded-full transition-all duration-1000" 
-                                 style="width: <?php echo min(100, ($user['tokens_remaining'] / 100) * 100); ?>%"></div>
+                            <div class="bg-green-500 h-2 rounded-full transition-all duration-1000"
+                                 style="width: <?php echo min(100, ($user['tokens_remaining'] / 9) * 100); ?>%"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Total Searches -->
-                <div class="bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-cyber-blue/50 transition-all group">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-400 text-sm font-medium">Total Searches</p>
-                            <p class="text-3xl font-bold text-cyber-blue mt-2"><?php echo number_format($totalSearches); ?></p>
+                            <p class="text-3xl font-bold text-blue-400 mt-2"><?php echo number_format($totalSearches); ?></p>
                         </div>
-                        <div class="w-12 h-12 bg-cyber-blue/20 rounded-lg flex items-center justify-center group-hover:bg-cyber-blue/30 transition-all">
-                            <i class="fas fa-search text-cyber-blue text-xl"></i>
+                        <div class="w-12 h-12 bg-blue-900 rounded-lg flex items-center justify-center group-hover:bg-blue-800 transition-all">
+                            <i class="fas fa-search text-blue-400 text-xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
                         <p class="text-sm text-gray-400">
-                            <i class="fas fa-arrow-up text-cyber-green mr-1"></i>
+                            <i class="fas fa-arrow-up text-green-400 mr-1"></i>
                             <?php echo $monthlySearches; ?> this month
                         </p>
                     </div>
                 </div>
 
                 <!-- Tokens Used -->
-                <div class="bg-gradient-to-br from-cyber-purple/20 to-cyber-red/20 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-cyber-purple/50 transition-all group">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-400 text-sm font-medium">Tokens Used</p>
-                            <p class="text-3xl font-bold text-cyber-purple mt-2"><?php echo number_format($totalTokensUsed); ?></p>
+                            <p class="text-3xl font-bold text-purple-400 mt-2"><?php echo number_format($totalTokensUsed); ?></p>
                         </div>
-                        <div class="w-12 h-12 bg-cyber-purple/20 rounded-lg flex items-center justify-center group-hover:bg-cyber-purple/30 transition-all">
-                            <i class="fas fa-chart-line text-cyber-purple text-xl"></i>
+                        <div class="w-12 h-12 bg-purple-900 rounded-lg flex items-center justify-center group-hover:bg-purple-800 transition-all">
+                            <i class="fas fa-chart-line text-purple-400 text-xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -168,21 +152,21 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
                     </div>
                 </div>
 
-                <!-- API Status -->
-                <div class="bg-gradient-to-br from-cyber-red/20 to-cyber-green/20 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-cyber-green/50 transition-all group">
+                <!-- Account Status -->
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-400 text-sm font-medium">API Status</p>
-                            <p class="text-3xl font-bold text-cyber-green mt-2">Online</p>
+                            <p class="text-gray-400 text-sm font-medium">Account Status</p>
+                            <p class="text-3xl font-bold text-green-400 mt-2">Active</p>
                         </div>
-                        <div class="w-12 h-12 bg-cyber-green/20 rounded-lg flex items-center justify-center group-hover:bg-cyber-green/30 transition-all">
-                            <i class="fas fa-server text-cyber-green text-xl animate-pulse"></i>
+                        <div class="w-12 h-12 bg-green-900 rounded-lg flex items-center justify-center group-hover:bg-green-800 transition-all">
+                            <i class="fas fa-check-circle text-green-400 text-xl"></i>
                         </div>
                     </div>
                     <div class="mt-4">
                         <p class="text-sm text-gray-400">
-                            <i class="fas fa-circle text-cyber-green mr-1"></i>
-                            All systems operational
+                            <i class="fas fa-shield-alt mr-1"></i>
+                            Trial account
                         </p>
                     </div>
                 </div>
@@ -191,9 +175,9 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 <!-- Search Types Pie Chart -->
-                <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                     <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                        <i class="fas fa-chart-pie text-cyber-blue mr-2"></i>
+                        <i class="fas fa-chart-pie text-blue-400 mr-2"></i>
                         Search Types Distribution
                     </h3>
                     <div class="h-64 flex items-center justify-center">
@@ -202,9 +186,9 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
                 </div>
 
                 <!-- Daily Usage Chart -->
-                <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                     <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                        <i class="fas fa-chart-bar text-cyber-green mr-2"></i>
+                        <i class="fas fa-chart-bar text-green-400 mr-2"></i>
                         Daily Usage (Last 7 Days)
                     </h3>
                     <div class="h-64">
@@ -214,29 +198,29 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
             </div>
 
             <!-- Recent Searches -->
-            <div class="bg-cyber-gray/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-white flex items-center">
-                        <i class="fas fa-history text-cyber-purple mr-2"></i>
+                        <i class="fas fa-history text-purple-400 mr-2"></i>
                         Recent Searches
                     </h3>
-                    <a href="history.php" class="text-cyber-blue hover:text-cyber-blue/80 transition-colors text-sm font-medium">
+                    <a href="history.php" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
                         View All <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
-                
+
                 <?php if (empty($recentSearches)): ?>
                     <div class="text-center py-8">
                         <i class="fas fa-search text-gray-600 text-4xl mb-4"></i>
                         <p class="text-gray-400">No searches yet</p>
-                        <a href="search.php" class="inline-block mt-4 bg-cyber-blue text-white px-4 py-2 rounded-lg hover:bg-cyber-blue/80 transition-colors">
+                        <a href="search.php" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                             Start Your First Search
                         </a>
                     </div>
                 <?php else: ?>
                     <div class="space-y-3">
                         <?php foreach ($recentSearches as $search): ?>
-                            <div class="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all">
+                            <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-all">
                                 <div class="flex-1">
                                     <p class="text-white font-medium"><?php echo htmlspecialchars($search['query']); ?></p>
                                     <p class="text-gray-400 text-sm">
@@ -261,7 +245,7 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
         const searchTypesData = <?php echo json_encode($searchTypes); ?>;
         const searchTypesLabels = searchTypesData.map(item => item.search_type);
         const searchTypesCounts = searchTypesData.map(item => item.count);
-        
+
         const searchTypesCtx = document.getElementById('searchTypesChart').getContext('2d');
         new Chart(searchTypesCtx, {
             type: 'doughnut',
@@ -270,13 +254,13 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
                 datasets: [{
                     data: searchTypesCounts,
                     backgroundColor: [
-                        '#00ff41',
-                        '#0080ff',
-                        '#8000ff',
-                        '#ff0040',
-                        '#ff8000'
+                        '#10B981', // green-400
+                        '#60A5FA', // blue-400
+                        '#A78BFA', // purple-400
+                        '#F87171', // red-400
+                        '#FBBF24'  // yellow-400
                     ],
-                    borderColor: '#1a1a1a',
+                    borderColor: '#1F2937',
                     borderWidth: 2
                 }]
             },
@@ -304,7 +288,7 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
         const dailyLabels = dailyUsageData.map(item => new Date(item.date).toLocaleDateString()).reverse();
         const dailySearches = dailyUsageData.map(item => item.searches).reverse();
         const dailyTokens = dailyUsageData.map(item => item.tokens).reverse();
-        
+
         const dailyUsageCtx = document.getElementById('dailyUsageChart').getContext('2d');
         new Chart(dailyUsageCtx, {
             type: 'line',
@@ -313,15 +297,15 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
                 datasets: [{
                     label: 'Searches',
                     data: dailySearches,
-                    borderColor: '#00ff41',
-                    backgroundColor: 'rgba(0, 255, 65, 0.1)',
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     tension: 0.4,
                     fill: true
                 }, {
                     label: 'Tokens Used',
                     data: dailyTokens,
-                    borderColor: '#0080ff',
-                    backgroundColor: 'rgba(0, 128, 255, 0.1)',
+                    borderColor: '#60A5FA',
+                    backgroundColor: 'rgba(96, 165, 250, 0.1)',
                     tension: 0.4,
                     fill: true
                 }]
@@ -361,10 +345,10 @@ logActivity($user['id'], 'dashboard_view', 'Viewed dashboard');
             }
         });
 
-        // Add some cyberpunk animations
+        // Add animations
         document.addEventListener('DOMContentLoaded', function() {
             // Animate cards on load
-            const cards = document.querySelectorAll('.bg-gradient-to-br');
+            const cards = document.querySelectorAll('.bg-gray-800');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';

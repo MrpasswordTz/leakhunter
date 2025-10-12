@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/config.php';
+require_once '../includes/config.php';
 
 // Redirect based on login status and role
 if (isLoggedIn()) {
@@ -10,7 +10,7 @@ if (isLoggedIn()) {
         header('Location: user/dashboard.php');
     }
 } else {
-    header('Location: home.php');
+    header('Location: ../login.php');
 }
 exit();
 ?>

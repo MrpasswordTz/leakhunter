@@ -20,7 +20,7 @@ $user = getUserInfo();
             </div>
             <div>
                 <h1 class="text-xl font-bold text-white">LeakHunter</h1>
-                <p class="text-xs text-gray-400">Cyber Security</p>
+                <p class="text-xs text-gray-400">User Panel</p>
             </div>
         </div>
     </div>
@@ -29,39 +29,31 @@ $user = getUserInfo();
     <nav class="mt-8 px-4">
         <ul class="space-y-2">
             <li>
-                <a href="dashboard.php" 
+                <a href="dashboard.php"
                    class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all group <?php echo $current_page === 'dashboard.php' ? 'bg-cyber-blue/20 text-cyber-blue border-r-2 border-cyber-blue' : ''; ?>">
                     <i class="fas fa-tachometer-alt mr-3 text-lg group-hover:text-cyber-blue transition-colors"></i>
                     <span class="font-medium">Dashboard</span>
                 </a>
             </li>
-            
+
             <li>
-                <a href="search.php" 
+                <a href="search.php"
                    class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all group <?php echo $current_page === 'search.php' ? 'bg-cyber-blue/20 text-cyber-blue border-r-2 border-cyber-blue' : ''; ?>">
                     <i class="fas fa-search mr-3 text-lg group-hover:text-cyber-green transition-colors"></i>
                     <span class="font-medium">Data Search</span>
                 </a>
             </li>
-            
+
             <li>
-                <a href="history.php" 
+                <a href="history.php"
                    class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all group <?php echo $current_page === 'history.php' ? 'bg-cyber-blue/20 text-cyber-blue border-r-2 border-cyber-blue' : ''; ?>">
                     <i class="fas fa-history mr-3 text-lg group-hover:text-cyber-purple transition-colors"></i>
                     <span class="font-medium">Search History</span>
                 </a>
             </li>
-            
+
             <li>
-                <a href="logs.php" 
-                   class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all group <?php echo $current_page === 'logs.php' ? 'bg-cyber-blue/20 text-cyber-blue border-r-2 border-cyber-blue' : ''; ?>">
-                    <i class="fas fa-clipboard-list mr-3 text-lg group-hover:text-cyber-red transition-colors"></i>
-                    <span class="font-medium">Activity Logs</span>
-                </a>
-            </li>
-            
-            <li>
-                <a href="profile.php" 
+                <a href="profile.php"
                    class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all group <?php echo $current_page === 'profile.php' ? 'bg-cyber-blue/20 text-cyber-blue border-r-2 border-cyber-blue' : ''; ?>">
                     <i class="fas fa-user-cog mr-3 text-lg group-hover:text-cyber-blue transition-colors"></i>
                     <span class="font-medium">Profile</span>
@@ -81,7 +73,7 @@ $user = getUserInfo();
                 <p class="text-xs text-gray-400 truncate"><?php echo htmlspecialchars($user['email']); ?></p>
             </div>
         </div>
-        
+
         <!-- Token Display -->
         <div class="bg-gray-800/50 rounded-lg p-3 mb-4">
             <div class="flex items-center justify-between">
@@ -89,13 +81,13 @@ $user = getUserInfo();
                 <span class="text-sm font-bold text-cyber-green"><?php echo number_format($user['tokens_remaining']); ?></span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
-                <div class="bg-gradient-to-r from-cyber-green to-cyber-blue h-2 rounded-full transition-all duration-500" 
-                     style="width: <?php echo min(100, ($user['tokens_remaining'] / 100) * 100); ?>%"></div>
+                <div class="bg-gradient-to-r from-cyber-green to-cyber-blue h-2 rounded-full transition-all duration-500"
+                     style="width: <?php echo min(100, ($user['tokens_remaining'] / 9) * 100); ?>%"></div>
             </div>
         </div>
-        
+
         <!-- Logout Button -->
-        <a href="logout.php" 
+        <a href="logout.php"
            class="flex items-center justify-center w-full px-4 py-2 bg-cyber-red/20 text-cyber-red rounded-lg hover:bg-cyber-red/30 transition-all group">
             <i class="fas fa-sign-out-alt mr-2 group-hover:animate-pulse"></i>
             <span class="font-medium">Logout</span>
@@ -111,15 +103,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const sidebar = document.getElementById('sidebar');
     const mobileOverlay = document.getElementById('mobile-overlay');
-    
+
     function toggleMobileMenu() {
         sidebar.classList.toggle('-translate-x-full');
         mobileOverlay.classList.toggle('hidden');
     }
-    
+
     mobileMenuButton.addEventListener('click', toggleMobileMenu);
     mobileOverlay.addEventListener('click', toggleMobileMenu);
-    
+
     // Close mobile menu on window resize
     window.addEventListener('resize', function() {
         if (window.innerWidth >= 1024) {
@@ -127,14 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileOverlay.classList.add('hidden');
         }
     });
-    
+
     // Add active state animations
     const navLinks = document.querySelectorAll('nav a');
     navLinks.forEach(link => {
         link.addEventListener('mouseenter', function() {
             this.style.transform = 'translateX(4px)';
         });
-        
+
         link.addEventListener('mouseleave', function() {
             this.style.transform = 'translateX(0)';
         });
