@@ -27,234 +27,210 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap');
 
-        .cyber-font {
-            font-family: 'Orbitron', monospace;
-        }
-
-        .tech-font {
+        body {
             font-family: 'Share Tech Mono', monospace;
-        }
-        
-
-        .matrix-bg {
-            background:
-                linear-gradient(45deg, #0a0a0a 25%, transparent 25%) -50px 0,
-                linear-gradient(-45deg, #0a0a0a 25%, transparent 25%) -50px 0,
-                linear-gradient(45deg, transparent 75%, #0a0a0a 75%),
-                linear-gradient(-45deg, transparent 75%, #0a0a0a 75%);
-            background-size: 100px 100px;
-            background-color: #000;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
         }
 
-        .cyber-grid {
-            background-image:
-                linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
+        .cyber-font { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+        .tech-font { font-family: 'Share Tech Mono', monospace; }
 
-        .data-stream {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg,
-                transparent 0%,
-                rgba(0, 255, 65, 0.1) 10%,
-                rgba(0, 128, 255, 0.1) 30%,
-                rgba(128, 0, 255, 0.1) 50%,
-                rgba(0, 128, 255, 0.1) 70%,
-                rgba(0, 255, 65, 0.1) 90%,
-                transparent 100%);
-            animation: dataFlow 8s linear infinite;
-        }
-
-        @keyframes dataFlow {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        .neon-glow {
-            text-shadow:
-                0 0 5px currentColor,
-                0 0 10px currentColor,
-                0 0 15px currentColor,
-                0 0 20px currentColor;
-        }
-
+        /* Navigation */
         .cyber-nav {
-            background: rgba(10, 10, 10, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10,10,15,0.85);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            border-bottom: 1px solid rgba(0,255,65,0.2);
+            transition: all 0.3s ease;
         }
 
+        .cyber-nav.scrolled {
+            background: rgba(10,10,15,0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Desktop Menu */
+        .desktop-menu a {
+            color: var(--cyber-green, #00ff41);
+            transition: color 0.3s;
+        }
+        .desktop-menu a:hover {
+            color: var(--cyber-blue, #0080ff);
+        }
+
+        /* Mobile Menu */
         .mobile-menu {
-            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(20,20,30,0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .mobile-menu.open { right: 0; }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .mobile-overlay.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .mobile-menu.open {
-            display: block;
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--cyber-green,#00ff41), var(--cyber-blue,#0080ff));
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
+        .btn-primary:hover { transform: translateY(-2px); }
 
-        .blink {
-            animation: blink 1s step-end infinite;
+        .btn-secondary {
+            border: 2px solid var(--cyber-green,#00ff41);
+            color: var(--cyber-green,#00ff41);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
         }
+        .btn-secondary:hover { background: rgba(0,255,65,0.1); }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, var(--cyber-green,#00ff41), var(--cyber-blue,#0080ff));
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 50;
         }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .matrix-bg, .cyber-grid, .data-stream {
-                display: none;
-            }
-        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
     </style>
 </head>
-<body class="bg-cyber-dark min-h-screen tech-font">
+<body class="min-h-screen tech-font">
 
-    <!-- Animated Background Layers -->
-    <div class="absolute inset-0 matrix-bg -z-10"></div>
-    <div class="absolute inset-0 cyber-grid -z-10"></div>
-    <div class="absolute inset-0 data-stream -z-10"></div>
+    <!-- Grid background -->
+    <div class="fixed inset-0 z-[-1] bg-[linear-gradient(135deg,#0f0f1a,#1a1a2e)]"></div>
+
+    <!-- Back to Top -->
+    <div id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <!-- Navigation -->
-    <nav class="cyber-nav fixed top-0 left-0 right-0 z-50">
+    <nav class="cyber-nav" id="mainNav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="home.php" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-green to-cyber-blue rounded-lg flex items-center justify-center">
-                            <i class="fas fa-shield-alt text-white text-sm"></i>
-                        </div>
-                        <span class="cyber-font text-cyber-green text-xl font-bold neon-glow">LEAKHUNTER</span>
-                    </a>
-                </div>
+                <a href="home.php" class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-cyber-green to-cyber-blue rounded-lg flex items-center justify-center">
+                        <i class="fas fa-globe text-white text-sm"></i>
+                    </div>
+                    <span class="cyber-font text-cyber-green text-xl font-bold">LEAKHUNTER</span>
+                </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="home.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">HOME</a>
-                    <a href="services.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">SERVICES</a>
-                    <a href="about.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">ABOUT</a>
-                    <a href="contact.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">CONTACT</a>
-                    <a href="documentation.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">DOCS</a>
-                    <a href="faq.php" class="text-cyber-green hover:text-cyber-blue transition-colors tech-font">FAQ</a>
-                    <div class="flex items-center space-x-4">
-                        <a href="login.php" class="bg-cyber-green/20 border border-cyber-green text-cyber-green px-4 py-2 rounded hover:bg-cyber-green/30 transition-colors tech-font text-sm">
-                            LOGIN
-                        </a>
-                        <a href="register.php" class="bg-cyber-blue/20 border border-cyber-blue text-cyber-blue px-4 py-2 rounded hover:bg-cyber-blue/30 transition-colors tech-font text-sm">
-                            REGISTER
-                        </a>
-                    </div>
+                <div class="hidden md:flex items-center space-x-6 desktop-menu">
+                    <a href="home.php">HOME</a>
+                    <a href="services.php">SERVICES</a>
+                    <a href="about.php">ABOUT</a>
+                    <a href="contact.php">CONTACT</a>
+                    <a href="documentation.php">DOCS</a>
+                    <a href="faq.php">FAQ</a>
+                    <a href="login.php" class="btn-secondary">LOGIN</a>
+                    <a href="register.php" class="btn-primary">REGISTER</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-cyber-green hover:text-cyber-blue transition-colors">
+                    <button id="mobile-menu-button" class="text-cyber-green">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu bg-cyber-gray border-t border-cyber-green/30">
-            <div class="px-4 py-4 space-y-4">
-                <a href="home.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">HOME</a>
-                <a href="services.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">SERVICES</a>
-                <a href="about.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">ABOUT</a>
-                <a href="contact.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">CONTACT</a>
-                <a href="documentation.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">DOCS</a>
-                <a href="faq.php" class="block text-cyber-green hover:text-cyber-blue transition-colors tech-font py-2">FAQ</a>
-                <div class="flex flex-col space-y-2 pt-4 border-t border-cyber-green/30">
-                    <a href="login.php" class="bg-cyber-green/20 border border-cyber-green text-cyber-green px-4 py-2 rounded text-center hover:bg-cyber-green/30 transition-colors tech-font">
-                        LOGIN
-                    </a>
-                    <a href="register.php" class="bg-cyber-blue/20 border border-cyber-blue text-cyber-blue px-4 py-2 rounded text-center hover:bg-cyber-blue/30 transition-colors tech-font">
-                        REGISTER
-                    </a>
-                </div>
-            </div>
-        </div>
     </nav>
 
-    <!-- Mobile overlay for header menu -->
-    <div id="mobile-overlay-header" class="fixed inset-0 bg-black/50 z-40 md:hidden" style="display: none;"></div>
+    <!-- Mobile Menu & Overlay -->
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.php" class="block py-2">HOME</a>
+        <a href="services.php" class="block py-2">SERVICES</a>
+        <a href="about.php" class="block py-2">ABOUT</a>
+        <a href="contact.php" class="block py-2">CONTACT</a>
+        <a href="documentation.php" class="block py-2">DOCS</a>
+        <a href="faq.php" class="block py-2">FAQ</a>
+        <a href="login.php" class="block py-2 btn-secondary text-center mt-4">LOGIN</a>
+        <a href="register.php" class="block py-2 btn-primary text-center mt-2">REGISTER</a>
+    </div>
+    <div id="mobile-overlay-header" class="mobile-overlay"></div>
 
-    <!-- Main Content Container -->
     <div class="pt-16">
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileOverlay = document.getElementById('mobile-overlay-header');
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-overlay-header');
+            const backToTop = document.getElementById('backToTop');
+            const nav = document.getElementById('mainNav');
 
-        if (mobileMenuButton && mobileMenu && mobileOverlay) {
-            function toggleMobileMenu() {
-                if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
-                    mobileMenu.style.display = 'block';
-                    mobileOverlay.style.display = 'block';
+            // Scroll effects
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    backToTop.classList.add('visible');
+                    nav.classList.add('scrolled');
                 } else {
-                    mobileMenu.style.display = 'none';
-                    mobileOverlay.style.display = 'none';
-                }
-            }
-
-            mobileMenuButton.addEventListener('click', toggleMobileMenu);
-            mobileOverlay.addEventListener('click', toggleMobileMenu);
-
-            // Close on resize
-            window.addEventListener('resize', function() {
-                if (window.innerWidth >= 768) {
-                    mobileMenu.style.display = 'none';
-                    mobileOverlay.style.display = 'none';
+                    backToTop.classList.remove('visible');
+                    nav.classList.remove('scrolled');
                 }
             });
-        }
-    });
 
-    // Terminal Preloader Animation
-    window.addEventListener('load', function() {
-        const stages = [
-            { text: "Initializing hack...", percent: 0 },
-            { text: "Bypassing firewalls...", percent: 25 },
-            { text: "Transferring data...", percent: 50 },
-            { text: "Decrypting files...", percent: 75 },
-            { text: "Access granted.", percent: 100 }
-        ];
+            // Back to top click
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        const loadingText = document.getElementById('loading-text');
-        const progressBar = document.getElementById('progress-bar');
-        const percentage = document.getElementById('percentage');
-        const preloader = document.getElementById('terminal-preloader');
-
-        let currentStage = 0;
-
-        function updateProgress() {
-            if (currentStage < stages.length) {
-                loadingText.textContent = stages[currentStage].text;
-                progressBar.style.width = stages[currentStage].percent + '%';
-                percentage.textContent = stages[currentStage].percent + '%';
-                currentStage++;
-                setTimeout(updateProgress, 400); // Update every 400ms for ~2s total
-            } else {
-                // Hide preloader after completion
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 300);
-                }, 500);
+            // Mobile menu toggle
+            function toggleMenu() {
+                mobileMenu.classList.toggle('open');
+                overlay.classList.toggle('visible');
             }
-        }
+            mobileButton.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
 
-        updateProgress();
-    });
+            // Close on resize
+            window.addEventListener('resize', () => {
+                if(window.innerWidth >= 768){
+                    mobileMenu.classList.remove('open');
+                    overlay.classList.remove('visible');
+                }
+            });
+        });
     </script>
