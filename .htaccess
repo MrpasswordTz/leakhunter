@@ -7,7 +7,6 @@ Options -Indexes
 
 # Hide server information
 ServerSignature Off
-ServerTokens Prod
 
 # Security Headers
 <IfModule mod_headers.c>
@@ -38,13 +37,10 @@ RewriteRule ^delete_search/?$ delete_search.php [L]
 RewriteRule ^export/?$ export.php [L]
 RewriteRule ^logout/?$ logout.php [L]
 
-# Deny direct access to PHP files except index.php
-<FilesMatch "^(config\.php|.*\.php)$">
+# Deny direct access to sensitive PHP files
+<FilesMatch "^(config\.php|device_fingerprint\.php)$">
     Require all denied
 </FilesMatch>
-<Files "index.php">
-    Require all granted
-</Files>
 
 # Custom 404 page
 ErrorDocument 404 /leakhunter/404.php
