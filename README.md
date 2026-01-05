@@ -47,7 +47,7 @@ You cannot protect what you cannot see. LeakHunter offers unparalleled search ca
 <br clear="left"/>
 
 ### 📊 Risk Assessment & Reporting
-<img src="https://leakhunter.xyz/risk.svg" align="right" width="350" alt="Risk Assessment" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/4396687474431b18fb28621f9618d2dd9c6dc061/risk.svg?token=AY7YS7RWOCQTUYYA72R4N43JLN4NO" align="right" width="350" alt="Risk Assessment" />
 **Data-Driven Decision Making.**
 Transform technical findings into executive-level reports. Understand your organization's risk score and track improvements over time. Our reporting tools are designed to facilitate compliance and communicate security posture to stakeholders.
 
