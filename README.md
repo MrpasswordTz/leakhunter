@@ -25,7 +25,7 @@ We translate complex threat data into actionable business insights, empowering o
 ## 🌟 Business Critical Features
 
 ### ⚡ Real-Time Threat Intelligence
-<img src="https://leakhunter.xyz/Breach_Detection.png" align="right" width="350" alt="Breach Detection Dashboard" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Breach_Detection.png?token=GHSAT0AAAAAADRNIB4HYMQ3ISRHKW4LJJCG2K3O7WA" align="right" width="350" alt="Breach Detection Dashboard" />
 **Minimize Reaction Time.**
 The gap between a breach and its discovery is where the damage happens. LeakHunter bridges that gap. Our engines monitor the surface, deep, and dark web 24/7 to detect if your corporate credentials or sensitive documents are exposed.
 
