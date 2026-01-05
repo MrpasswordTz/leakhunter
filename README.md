@@ -36,7 +36,7 @@ The gap between a breach and its discovery is where the damage happens. LeakHunt
 <br clear="right"/>
 
 ### 🔍 Comprehensive Asset Investigation
-<img src="https://leakhunter.xyz/Comprehensive_Search.png" align="left" width="350" alt="Search Interface" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Comprehensive_Search.png?token=GHSAT0AAAAAADRNIB4HAON6WB27CVV3YMYG2K3PBOA" align="left" width="350" alt="Search Interface" />
 **Visibility is Security.**
 You cannot protect what you cannot see. LeakHunter offers unparalleled search capabilities across billions of leaked records, allowing your team to investigate potential exposures associated with your domain, employee emails, or IP addresses.
 
