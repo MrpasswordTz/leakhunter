@@ -48,7 +48,7 @@
 ## 🌟 Business Critical Features
 
 ### ⚡ Real-Time Threat Intelligence
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Breach_Detection.png" align="right" width="350" alt="Breach Detection Dashboard" />
+
 
 **Minimize Reaction Time.**
 The gap between a breach and its discovery is where the damage happens. LeakHunter bridges that gap. Our engines monitor the surface, deep, and dark web 24/7 to detect if your corporate credentials or sensitive documents are exposed.
@@ -57,10 +57,10 @@ The gap between a breach and its discovery is where the damage happens. LeakHunt
 - **Proactive Defense**: Stop account takeovers before they start.
 - **Brand Reputation**: Protect your customers' trust by securing their data.
 
-<br clear="right"/>
+
 
 ### 🔍 Comprehensive Asset Investigation
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Comprehensive_Search.png" align="left" width="350" alt="Search Interface" />
+
 
 **Visibility is Security.**
 You cannot protect what you cannot see. LeakHunter offers unparalleled search capabilities across billions of leaked records, allowing your team to investigate potential exposures associated with your domain, employee emails, or IP addresses.
@@ -69,10 +69,10 @@ You cannot protect what you cannot see. LeakHunter offers unparalleled search ca
 - **Granular Filters**: Pinpoint specific threats relevant to your industry.
 - **Historical Data**: Trace the legitimacy and timeline of potential leaks.
 
-<br clear="left"/>
+
 
 ### 📊 Risk Assessment & Reporting
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/4396687474431b18fb28621f9618d2dd9c6dc061/risk.svg?token=AY7YS7RWOCQTUYYA72R4N43JLN4NO" align="right" width="350" alt="Risk Assessment" />
+
 
 **Data-Driven Decision Making.**
 Transform technical findings into executive-level reports. Understand your organization's risk score and track improvements over time. Our reporting tools are designed to facilitate compliance and communicate security posture to stakeholders.
@@ -81,7 +81,7 @@ Transform technical findings into executive-level reports. Understand your organ
 - **Compliance Support**: Maintain standards with documented audits.
 - **Actionable Insights**: Clear steps to remediate identified risks.
 
-<br clear="right"/>
+
 
 ---
 
