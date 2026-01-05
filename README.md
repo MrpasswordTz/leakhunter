@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://leakhunter.xyz">
-    <img src="https://leakhunter.xyz/logo.png" alt="LeakHunter Logo" width="180" />
+    <img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/logo.png?token=GHSAT0AAAAAADRNIB4G6DSYYE6FKPS4ZQBY2K3O5KQ" alt="LeakHunter Logo" width="180" />
   </a>
   <h1 style="border-bottom: none;">LeakHunter</h1>
   <h3>Strategic Digital Risk Protection for the Modern Enterprise</h3>
