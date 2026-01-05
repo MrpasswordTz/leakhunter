@@ -110,6 +110,6 @@ Transform technical findings into executive-level reports. Understand your organ
   <br />
   
   <p align="center">
-    <small>© 2024 LeakHunter Inc. All Rights Reserved.</small>
+    <small>© 2026 LeakHunter Inc. All Rights Reserved.</small>
   </p>
 </div>
