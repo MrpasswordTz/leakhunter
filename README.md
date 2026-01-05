@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <a href="https://leakhunter.xyz">
-    <img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/logo.png" alt="LeakHunter Logo" width="200" />
+    <img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/logo.png" alt="LeakHunter Logo" width="180" />
   </a>
   <br />
   <br />
@@ -48,7 +48,7 @@
 ## 🌟 Business Critical Features
 
 ### ⚡ Real-Time Threat Intelligence
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Breach_Detection.png?token=GHSAT0AAAAAADRNIB4HYMQ3ISRHKW4LJJCG2K3O7WA" align="right" width="400" alt="Breach Detection Dashboard" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Breach_Detection.png" align="right" width="350" alt="Breach Detection Dashboard" />
 
 **Minimize Reaction Time.**
 The gap between a breach and its discovery is where the damage happens. LeakHunter bridges that gap. Our engines monitor the surface, deep, and dark web 24/7 to detect if your corporate credentials or sensitive documents are exposed.
@@ -60,7 +60,7 @@ The gap between a breach and its discovery is where the damage happens. LeakHunt
 <br clear="right"/>
 
 ### 🔍 Comprehensive Asset Investigation
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Comprehensive_Search.png?token=GHSAT0AAAAAADRNIB4HAON6WB27CVV3YMYG2K3PBOA" align="left" width="400" alt="Search Interface" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/Comprehensive_Search.png" align="left" width="350" alt="Search Interface" />
 
 **Visibility is Security.**
 You cannot protect what you cannot see. LeakHunter offers unparalleled search capabilities across billions of leaked records, allowing your team to investigate potential exposures associated with your domain, employee emails, or IP addresses.
@@ -72,7 +72,7 @@ You cannot protect what you cannot see. LeakHunter offers unparalleled search ca
 <br clear="left"/>
 
 ### 📊 Risk Assessment & Reporting
-<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/4396687474431b18fb28621f9618d2dd9c6dc061/risk.svg?token=AY7YS7RWOCQTUYYA72R4N43JLN4NO" align="right" width="400" alt="Risk Assessment" />
+<img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/4396687474431b18fb28621f9618d2dd9c6dc061/risk.svg?token=AY7YS7RWOCQTUYYA72R4N43JLN4NO" align="right" width="350" alt="Risk Assessment" />
 
 **Data-Driven Decision Making.**
 Transform technical findings into executive-level reports. Understand your organization's risk score and track improvements over time. Our reporting tools are designed to facilitate compliance and communicate security posture to stakeholders.
@@ -103,7 +103,7 @@ Transform technical findings into executive-level reports. Understand your organ
   <p>Don't wait for a breach to happen. Take control of your digital risk.</p>
 
   <a href="https://leakhunter.xyz">
-    <img src="https://img.shields.io/badge/Launch_LeakHunter-0056D2?style=for-the-badge&logo=rocket&logoColor=white" height="50" alt="Launch LeakHunter" />
+    <img src="https://img.shields.io/badge/Launch_LeakHunter-0056D2?style=for-the-badge&logo=google-chrome&logoColor=white" height="40" alt="Launch LeakHunter" />
   </a>
 
   <br />
