@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <a href="https://leakhunter.xyz">
+  <a href="https://leakhunt3r.xyz">
     <img src="https://raw.githubusercontent.com/MrpasswordTz/leakhunter/refs/heads/main/logo.png" alt="LeakHunter Logo" width="180" />
   </a>
   <br />
@@ -11,21 +11,21 @@
   **Strategic Digital Risk Protection for the Modern Enterprise**
 
   <p align="center">
-    <a href="https://leakhunter.xyz">
+    <a href="https://leakhunt3r.xyz">
       <img src="https://img.shields.io/badge/Status-Live-success?style=for-the-badge&color=2ea44f" alt="Status Live">
     </a>
-    <a href="https://leakhunter.xyz">
+    <a href="https://leakhunt3r.xyz">
       <img src="https://img.shields.io/badge/Enterprise-Ready-blue?style=for-the-badge&color=0366d6" alt="Enterprise Ready">
     </a>
-    <a href="https://leakhunter.xyz">
+    <a href="https://leakhunt3r.xyz">
        <img src="https://img.shields.io/badge/Security-Advanced-blueviolet?style=for-the-badge&color=6f42c1" alt="Security Advanced">
     </a>
   </p>
 
   <p align="center">
-    <a href="https://leakhunter.xyz"><strong>Visit Website</strong></a> •
-    <a href="https://leakhunter.xyz/features"><strong>Explore Features</strong></a> •
-    <a href="https://leakhunter.xyz/contact"><strong>Contact Sales</strong></a>
+    <a href="https://leakhunt3r.xyz"><strong>Visit Website</strong></a> •
+    <a href="https://leakhunt3r.xyz/features"><strong>Explore Features</strong></a> •
+    <a href="https://leakhunt3r.xyz/contact"><strong>Contact Sales</strong></a>
   </p>
 </div>
 
@@ -102,7 +102,7 @@ Transform technical findings into executive-level reports. Understand your organ
 
   <p>Don't wait for a breach to happen. Take control of your digital risk.</p>
 
-  <a href="https://leakhunter.xyz">
+  <a href="https://leakhunt3r.xyz">
     <img src="https://img.shields.io/badge/Launch_LeakHunter-0056D2?style=for-the-badge&logo=google-chrome&logoColor=white" height="40" alt="Launch LeakHunter" />
   </a>
 
